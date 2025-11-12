@@ -141,11 +141,15 @@ class TestPreprocessingEdgeCases:
     
     def test_empty_dataframe(self):
         """Test handling of empty DataFrame."""
+        if not PREPROCESSING_AVAILABLE:
+            pytest.skip("Preprocessing not available")
+        
         df = pd.DataFrame()
         
-        # Should handle gracefully or raise appropriate error
-        with pytest.raises((ValueError, KeyError, IndexError)):
-            remove_duplicates(df) if PREPROCESSING_AVAILABLE else None
+        # Empty dataframe should return empty dataframe (graceful handling)
+        result = remove_duplicates(df)
+        assert isinstance(result, pd.DataFrame)
+        assert len(result) == 0
     
     def test_missing_values(self, sample_raw_data):
         """Test handling of missing values."""
@@ -160,6 +164,9 @@ class TestPreprocessingEdgeCases:
     
     def test_single_class_target(self):
         """Test error handling when target has only one class."""
+        if not PREPROCESSING_AVAILABLE:
+            pytest.skip("Preprocessing not available")
+            
         df = pd.DataFrame({
             'feature_1': [1, 2, 3, 4],
             'Performance_Binary': [1, 1, 1, 1]  # Only one class
@@ -167,10 +174,9 @@ class TestPreprocessingEdgeCases:
         
         X, y = df.drop('Performance_Binary', axis=1), df['Performance_Binary']
         
-        # Should raise error or warning when stratifying with single class
-        with pytest.raises((ValueError, Exception)):
-            if PREPROCESSING_AVAILABLE:
-                split_train_test(X, y, test_size=0.2, stratify=y)
+        # sklearn raises ValueError when stratifying with single class
+        with pytest.raises(ValueError):
+            split_train_test(X, y, test_size=0.2, stratify=y)
 
 
 @pytest.mark.unit

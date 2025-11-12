@@ -188,8 +188,12 @@ class TestMetricsValidation:
         y_true = np.array([])
         y_pred = np.array([])
         
-        with pytest.raises((ValueError, ZeroDivisionError)):
-            accuracy_score(y_true, y_pred)
+        # sklearn handles empty arrays gracefully by returning nan
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            result = accuracy_score(y_true, y_pred)
+            assert np.isnan(result), "Empty arrays should return nan"
 
 
 @pytest.mark.unit
