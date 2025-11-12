@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Dict, Any, Optional, List
 import logging
 from datetime import datetime
+import json
 
 try:
     from evidently import Report
@@ -16,10 +17,8 @@ try:
     EVIDENTLY_AVAILABLE = True
 except ImportError:
     EVIDENTLY_AVAILABLE = False
-    logging.warning('Evidenyly not available. Drift detection disabled.')
+    logging.warning('Evidently not available. Drift detection disabled.')
     
-from app.config import config
-
 logger = logging.getLogger(__name__)
 
 class DriftDetector:
@@ -29,11 +28,11 @@ class DriftDetector:
         """
         Initialize drift detector. 
         Args:
-            reference_data path: Path to reference data CSV 
+            reference_data_path: Path to reference data CSV 
         """
         self.reference_data_path = reference_data_path
         self.reference_data = None
-        self.drift_threshold = 0.1 # 10% drift threshold
+        self.drift_threshold = 0.1  # 10% drift threshold
         
         if not EVIDENTLY_AVAILABLE:
             logger.warning('Evidently not installed. Drift detection unavailable.')
@@ -77,7 +76,7 @@ class DriftDetector:
             }
         
         try:
-            # Create Evidently report
+            # Create Evidently report with DriftedColumnsCount
             report = Report(metrics=[
                 DriftedColumnsCount()
             ])
@@ -88,26 +87,23 @@ class DriftDetector:
                 current_data=current_data
             )
             
-            # Extract results
-            result_dict = report.as_dict()
+            # Extract results from metric using Evidently 0.7.14 API
+            metric = report.metrics[0]
+            drift_share = metric.drift_share
             
-            # Parse drift results
-            drift_metric = result_dict['metrics'][0]['result']
-            
-            number_of_columns = drift_metric.get('number_of_columns', 0)
-            number_of_drifted = drift_metric.get('number_of_drifted_columns', 0)
-            share_drifted = number_of_drifted / number_of_columns if number_of_columns > 0 else 0
+            # Get number of columns
+            number_of_columns = len(current_data.columns)
+            number_of_drifted = int(drift_share * number_of_columns)
             
             drift_results = {
-                'drift_detected': number_of_drifted > 0,
+                'drift_detected': drift_share > 0,
                 'number_of_columns': number_of_columns,
                 'number_of_drifted_columns': number_of_drifted,
-                'drifted_columns_count': number_of_drifted,
-                'share_of_drifted_columns': share_drifted,
-                'drift_share': share_drifted,
+                'share_of_drifted_columns': drift_share,
                 'timestamp': datetime.now().isoformat()
             }
             
+            logger.info(f"Drift detection: {drift_results}")
             return drift_results
             
         except Exception as e:

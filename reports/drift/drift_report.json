@@ -1,0 +1,84 @@
+{
+  "timestamp": "2025-11-12T14:27:19.125332",
+  "baseline_metrics": {
+    "accuracy": 0.418,
+    "precision": 0.9565217391304348,
+    "recall": 0.16011644832605532,
+    "f1": 0.2743142144638404,
+    "mean_probability": 0.16849276091616397
+  },
+  "drift_scenarios": {
+    "mean_shift": {
+      "drift_results": {
+        "drift_detected": true,
+        "number_of_columns": 9,
+        "number_of_drifted_columns": 4,
+        "share_of_drifted_columns": 0.5,
+        "timestamp": "2025-11-12T14:27:20.553031"
+      },
+      "drifted_metrics": {
+        "accuracy": 0.714,
+        "precision": 1.0,
+        "recall": 0.027210884353741496,
+        "f1": 0.052980132450331126,
+        "mean_probability": 0.017596032831183578
+      },
+      "degradation": {
+        "accuracy": -0.296,
+        "precision": -0.04347826086956519,
+        "recall": 0.13290556397231382,
+        "f1": 0.2213340820135093,
+        "mean_probability": 0.1508967280849804
+      },
+      "action": "\ud83d\udd34 CRITICAL: Immediate retraining required. Performance degraded >10%"
+    },
+    "variance_change": {
+      "drift_results": {
+        "drift_detected": true,
+        "number_of_columns": 9,
+        "number_of_drifted_columns": 4,
+        "share_of_drifted_columns": 0.5,
+        "timestamp": "2025-11-12T14:27:21.428362"
+      },
+      "drifted_metrics": {
+        "accuracy": 0.646,
+        "precision": 0.9927007299270073,
+        "recall": 0.4358974358974359,
+        "f1": 0.6057906458797327,
+        "mean_probability": 0.2842787173176572
+      },
+      "degradation": {
+        "accuracy": -0.22800000000000004,
+        "precision": -0.0361789907965725,
+        "recall": -0.2757809875713806,
+        "f1": -0.33147643141589234,
+        "mean_probability": -0.11578595640149322
+      },
+      "action": "\ud83d\udfe2 MONITOR: Drift detected but performance stable. Continue monitoring"
+    },
+    "distribution_shift": {
+      "drift_results": {
+        "drift_detected": true,
+        "number_of_columns": 9,
+        "number_of_drifted_columns": 4,
+        "share_of_drifted_columns": 0.5,
+        "timestamp": "2025-11-12T14:27:21.848552"
+      },
+      "drifted_metrics": {
+        "accuracy": 0.448,
+        "precision": 0.90625,
+        "recall": 0.17682926829268292,
+        "f1": 0.29591836734693877,
+        "mean_probability": 0.18475261861593448
+      },
+      "degradation": {
+        "accuracy": -0.030000000000000027,
+        "precision": 0.05027173913043481,
+        "recall": -0.0167128199666276,
+        "f1": -0.02160415288309836,
+        "mean_probability": -0.016259857699770508
+      },
+      "action": "\ud83d\udfe2 MONITOR: Drift detected but performance stable. Continue monitoring"
+    }
+  }
+}
