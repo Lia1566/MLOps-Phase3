@@ -22,12 +22,23 @@ Las pruebas de simulación de drift de datos, componente innovador de este traba
 
 ## 4. Fase 3. Sistema de Producción y Operacionalización
 
-La Fase 3 representa la transformación definitiva del pipeline reproducible en un sistema de producción robusto que cumple con los estándares de MLOps. Esta fase implementa cinco componentes principales: testing exhaustivo, API RESTful, 
-reproducibilidad garantizada, containerización con Docker, y dectección de drift. 
+La Fase 3 representa la transformación definitiva del pipeline reproducible en un sistema de producción robusto que cumple con los estándares de MLOps. Esta fase implementa cinco componentes principales: 
+
+1. **Testing Automatizado**: Marco exhaustivo con 128 pruebas que validan corrección funcional
+2. **API RESTful**: Interfaz estandarizada construida con FastAPI que expone 6 endpoints
+3. **Reproducibilidad**: Mecanismos rigurosos que garantizan consistencia entre ambientes
+4. **Containerización**: Infraestructura Docker + Kubernetes para escalabilidad
+5. **Monitoreo de Drift**: Detección proactiva de degradación del modelo
+
+### Arquitectura General del Sistema
+
+![Arquitectura MLOps](images/arquitectura_mlops.png)
+*Figura 1: Arquitectura completa del sistema MLOps implementado*
 
 ### 4.1 Requisito 1: Marco de Testing Exhaustivo
 
 El marco de testing desarrollado adopta pirámide de testing que prioriza priebas unitarias rápidas en la base (~70%), complementadas con pruebas de integración (~18%) y pruebas de casos límite (~10%). La implementación utiliza pytest como framework
 con fixtures composables que proveen datos y objetos reutilizables. El archivo `pytest.ini` define cobertura mínina de 85% como objetivo cuantitativo. 
 
-Las pruebas unitarias 
+Las pruebas unitarias validan comportamiento de funciones individuales en aislamiento completo. Se implementaron 92 pruebas unitarias que cubren: 18 pruebas de métricas (accuracy, precision, recall, F1-score), 24 pruebas de preprocesamiento 
+(one-hot encoding, normalización, manejo de valores faltantes), y 16 pruebas de inferencia del modelo. Las pruebas de integración validan comportamiento cuando múltiples componentes interactúan, implementando 23 pruebas distribuidas en: 12 pruebas de API endpoints, 6 pruebas de pipeline DVC, y 5 pruebas end-to-end. 
