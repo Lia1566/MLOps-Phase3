@@ -1,4 +1,4 @@
-<img width="468" height="25" alt="image" src="https://github.com/user-attachments/assets/65b0e4f6-caa3-428d-8fb8-ee7f5f69d249" /># Proyecto Entrega Final
+# Proyecto Entrega Final
 
 ## Sistema MLOps de Producción para Predicción de Desempeño Estudiantil
 
