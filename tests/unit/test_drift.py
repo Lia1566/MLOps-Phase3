@@ -62,8 +62,17 @@ class TestDriftDetection:
         
         results = detector.detect_drift(current_data)
         
+        # Check that Evidently drift detection returns expected structure
         assert 'drift_detected' in results
-        assert 'drift_score' in results or 'error' in results
+        assert isinstance(results['drift_detected'], bool)
+        assert 'number_of_columns' in results
+    
+        # With identical data, drift should ideally be False
+        # But Evidently might still detect statistical drift, so we just check structure
+        if results['drift_detected']:
+            # If drift detected, ensure proper structure exists
+            assert 'number_of_drifted_columns' in results
+            assert 'share_of_drifted_columns' in results
     
     def test_detect_with_drift(self):
         """Test drift detection with different data (drift expected)."""

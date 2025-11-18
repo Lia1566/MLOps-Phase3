@@ -107,3 +107,5 @@ aws-credentials.json
 
 # Allow .env.example
 !.env.example
+.coverage*
+reports/drift/drift_report.json
