@@ -672,19 +672,29 @@ Execution Time: ~4 seconds
 
 ```
 MLOps-Phase3/
-├── app/                      # FastAPI application
+├── .dvc/
+|
+├── .github/workflows                      
+│   ├── README.md
+│   ├── ci.yaml
+│   ├── docker.yml
+│   ├── drift-check.yml
+|          
+├── app/                     # FastAPI application
 │   ├── main.py              # API endpoints & routes
 │   ├── models.py            # Pydantic models
 │   ├── inference.py         # Model inference logic
 │   ├── drift_detection.py   # Drift monitoring
 │   └── config.py            # Configuration management
 │
-├── src/                      # Source code modules
+├── src/                     # Source code modules
 │   ├── models/              # ML models & pipelines
-│   ├── preprocessing/       # Data preprocessing
+│   ├── data/       
 │   └── utils/               # Utility functions
+│   └── visualizations/
+│   └── features/               
 │
-├── tests/                    # Comprehensive test suite
+├── tests/                   # Comprehensive test suite
 │   ├── unit/                # Unit tests
 │   │   ├── test_metrics.py
 │   │   ├── test_model_inference.py
@@ -705,13 +715,14 @@ MLOps-Phase3/
 │   ├── ingress.yaml         # Ingress rules
 │   └── README.md            # Kubernetes guide
 │
-├── scripts/                  # Utility scripts
+├── scripts/                 # Utility scripts
 │   └── simulate_drift.py    # Drift simulation & detection
 │
-├── models/                   # Trained models (DVC tracked)
-│   └── pipeline_baseline.pkl
+├── models/                  # Trained models (DVC tracked and .pkls)
 │
-├── data/                     # Data directories (DVC tracked)
+├── notebooks/               # Notebooks from Phase 2
+|
+├── data/                    # Data directories (DVC tracked)
 │   ├── raw/                 # Raw data
 │   ├── processed/           # Processed data
 │   ├── reference/           # Reference data for drift
@@ -721,19 +732,23 @@ MLOps-Phase3/
 │   ├── drift/               # Drift detection reports
 │   │   ├── drift_analysis_*.png
 │   │   └── drift_report.json
-│   └── figures/             # Other visualizations
+│   └── figures/             # Visualizations
 │
 ├── config/                   # Configuration files
 │   └── config.yaml
 │
+├── .coverage
 ├── Dockerfile               # Docker image definition
 ├── docker-compose.yml       # Docker Compose config
 ├── requirements-prod.txt    # Production dependencies
 ├── requirements-dev.txt     # Development dependencies
+└── requirements.txt
 ├── pytest.ini               # Pytest configuration
 ├── params.yaml              # DVC parameters
 ├── dvc.yaml                 # DVC pipeline definition
 └── README.md                # This file
+└── README_DOCKER.md
+└── TESTING.md
 ```
 
 ---
